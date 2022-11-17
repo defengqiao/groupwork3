@@ -98,8 +98,6 @@ gethess = function(hess, grad, ..., n, theta, eps, gx) {
 
 
 
-
-
 #
 foo=function(x){
   log(x)
