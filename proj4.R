@@ -17,11 +17,11 @@ gethess = function(hess, grad, ..., n, theta, eps, gx) {
   if (is.null(hess)) { # if hessian is not given
     H = matrix(0, n, n) # initializate hessian
     for (i in 1:n) {
-      di = theta
-      di[i] = di[i] + eps
-      H[i,] = (grad(di,...) - gx) / eps
+      di = theta #diagonal would be filled by theta
+      di[i] = di[i] + eps #the finite difference intervals being added in the ith pivot
+      H[i,] = (grad(di,...) - gx) / eps #calculate the column vector of ith hessian matrix
     }
-    H = (t(H) + H) / 2   # make estimated Hessian symmetric
+    H = (t(H) + H) / 2   # make sure estimated Hessian is symmetric
   } else{
     H = hess(theta, ...) # if hessian is given, it will be calculated directly
   }
@@ -61,6 +61,7 @@ newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
     # positive definiteness is tested by seeing if a Cholesky decomposition is possible
     while (mode((try(chol(H),silent=TRUE)->H2)) == "character") { # H2 is Cholesky factorization of Hessian
       lam = eigen(H)$values
+      #when hessian is not positive definite, then at least one of the pivot is negative, then eliminatie it by subtraction
       H = H + diag(1 - min(lam), n)
     }
     
