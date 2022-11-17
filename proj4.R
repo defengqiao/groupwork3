@@ -23,10 +23,10 @@ gethess = function(hess, grad, ..., n, theta, eps, gx) {
     }
     H = (t(H) + H) / 2   # make sure estimated Hessian is symmetric
   } else{
-    H = hess(theta, ...) # if hessian is given, it will be calculated directly
+    H = hess(theta, ...) # if hessian is given, output will be calculated directly
   }
   return(H) # return Hessian function
-} # gethess
+} 
 
 # Newton's Method
 newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
@@ -51,7 +51,7 @@ newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
   ni = 0                # number of Newton iterations
   
   # iteration begin, determine if convergence whether all elements of the gradient vector 
-  # have absolute value less than tol times the absolute value of the objective function plus fscale.
+  # have the absolute value less than tol times the absolute value of the objective function plus fscale.
   # and if number of iterations is less than the maximum number of Newton iterations
   while (any(abs(gx)>=tol*(abs(fx)+fscale))&(ni<maxit)) { 
     H=gethess(hess,grad,...,n=n,theta=theta,eps=eps,gx=gx) 
@@ -60,6 +60,7 @@ newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
     # by adding M*I to it, where M is min(eigenvalue)+1
     # positive definiteness is tested by seeing if a Cholesky decomposition is possible
     while (mode((try(chol(H),silent=TRUE)->H2)) == "character") { # H2 is Cholesky factorization of Hessian
+      #denote the eigrnvalue of Hessian as lam
       lam = eigen(H)$values
       #when hessian is not positive definite, then at least one of the pivot is negative, then eliminatie it by subtraction
       H = H + diag(1 - min(lam), n)
@@ -91,7 +92,7 @@ newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
     fx = func(theta, ...) # calculate the objective function for new theta
     gx = grad(theta, ...) # calculate the gradient for new theta
     
-    ni = ni + 1 # finish iteration once
+    ni = ni + 1 # count the number of time of iteration
   }# iterations are finished
   
   # newt function should return a list containing:
@@ -106,7 +107,7 @@ newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
       # issue warning if Hessian is not positive definite at convergence
       warning("Hessian is not positive definite at convergence")
     }else{
-      result$Hi=chol2inv(H2) # if Hessian is positive definite, calculate inverse of the Hessian
+      result$Hi=chol2inv(H2) # if Hessian is positive definite, calculate inverse of it
     }
   }else{
     # issue warning if iterations fail to converge
