@@ -8,25 +8,23 @@
 
 # Hessian function
 gethess = function(hess, grad, ..., n, theta, eps, gx) {
-  # estimated an approximation to Hessian, if hessian is not given, 
-  # by finite differencing of the gradient vector.
+  # if hessian is not given,estimate it by finite differencing of the gradient vector.
   # hess is the Hessian matrix function, grad is the gradient function
   # ... is used to pass arguments to a function, n is the number of optimization parameters
-  # theta is a vector of initial values, eps is the finite difference intervals,
-  # gx is the gradient for a given theta.
+  # theta is a vector of initial values, eps is the finite difference intervals
   if (is.null(hess)) { # if hessian is not given
     H = matrix(0, n, n) # initializate hessian
     for (i in 1:n) {
-      di = theta #diagonal would be filled by theta
-      di[i] = di[i] + eps #the finite difference intervals being added in the ith pivot
+      di = theta 
+      di[i] = di[i] + eps 
       H[i,] = (grad(di,...) - gx) / eps #calculate the column vector of ith hessian matrix
     }
-    H = (t(H) + H) / 2   # make sure estimated Hessian is symmetric
+    H = (t(H) + H) / 2   # estimated Hessian is symmetric
   } else{
     H = hess(theta, ...) # if hessian is given, output will be calculated directly
   }
   return(H) # return Hessian function
-} 
+} #gethess
 
 # Newton's Method
 newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
@@ -107,7 +105,8 @@ newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
       # issue warning if Hessian is not positive definite at convergence
       warning("Hessian is not positive definite at convergence")
     }else{
-      result$Hi=chol2inv(H2) # if Hessian is positive definite, calculate inverse of it
+      # if Hessian is positive definite, calculate the inverse of it
+      result$Hi=chol2inv(H2) 
     }
   }else{
     # issue warning if iterations fail to converge
