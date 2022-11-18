@@ -4,7 +4,21 @@
 #              Tianai Ren:  
 #              YiZhou Chen: 
 
-# Code to .
+# Overview: 
+# Code to perform newton's method for minimization for functions.
+# The challenge is that in some situations the Hessian matrix is not given,
+# thus, the we need to write a function to create a Hessian function in 
+# this situation. 
+# In addition to that, the function would not work unless fx and gx provide
+# finite value, and warnings would be called.
+# Moreover, if the hessian matrix is not positive definite, an obvious approach 
+# is to add a multiple of the identity matrix to it, large enough to force 
+# positive definiteness, when everything is ready, the newton's method would 
+# be applied in the objective function and start the optimazation process.
+# Finally, the code here would investigates the minimize value of the objective 
+# function, the theta value in the optimal place, time of iteration, the final 
+# gradient function and the inverse ofthe hessian matrix.
+
 
 # Hessian function
 gethess = function(hess, grad, ..., n, theta, eps, gx) {
