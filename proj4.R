@@ -53,12 +53,10 @@ newt = function(theta,func,grad,hess=NULL,...,tol=1e-8,fscale=1,
   fx = func(theta, ...) # calculate the objective function at the initial theta
   gx = grad(theta, ...) # calculate the gradient at the initial theta
   
-  if (!is.finite(fx)){ # check if fx,gx are finite 
-   stop("objective is not finite at initial parameters") # issue warnings if fx is not finite
-    stopifnot()
-  }else if (!all(is.finite(gx))){
-    stop("derivatives are not finite at initial parameters") # issue warnings if gx is not finite
+  if ((!is.finite(fx))|(!all(is.finite(gx)))){ # check if fx,gx are finite 
+    stop("function is not finite at initial parameters") # issue warnings if fx or gx is not finite
   }
+  
   n = length(theta)     # number of optimization parameters
   ni = 0                # number of Newton iterations
   
