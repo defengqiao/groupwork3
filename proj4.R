@@ -15,6 +15,7 @@
 # is to add a multiple of the identity matrix to it, large enough to force 
 # positive definiteness, when everything is ready, the newton's method would 
 # be applied in the objective function and start the optimazation process.
+# However, if 
 # Last but not least, the convergence should be judged by seeing whether all 
 # elements of the gradient vector have absolute value less than tol times the 
 # absolute value of the objective function plus fscale, and another warning 
