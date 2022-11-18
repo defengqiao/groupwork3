@@ -1,8 +1,8 @@
 #Defeng Qiao, s2419769; Tianai Ren, s2329207; YiZhou Chen, s2450877
-#
-#Contributions:Defeng Qiao: 
-#              Tianai Ren:  
-#              YiZhou Chen: 
+#https://github.com/defengqiao/groupwork3.git
+#Contributions:Defeng Qiao: 40%, code framework, code refactoring for efficiency
+#              Tianai Ren:  30%，test function, code detail modification, comments
+#              YiZhou Chen: 30%，test function, overview, comments
 
 # Overview: 
 # Code to perform newton's method for minimization for functions.
